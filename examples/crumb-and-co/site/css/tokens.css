@@ -1,0 +1,49 @@
+/* Crumb & Co. design tokens. Every color, font, size, and radius on the site,
+   in the slide decks, and in the figures comes from this file. */
+
+:root {
+  --primary: #c2410c;        /* toasted orange: buttons, links, callout arrows */
+  --primary-ink: #ffffff;    /* text that sits on --primary */
+  --crust: #92400e;          /* headings and figure outlines */
+  --flour: #fffbf5;          /* page and slide background */
+  --butter: #fde68a;         /* highlights and "fresh today" badges */
+  --ink: #1f2937;            /* body text */
+  --muted: #6b7280;          /* captions and secondary text */
+  --line: #e7dccd;           /* borders and dividers */
+  --sold-out: #9ca3af;       /* anything that can't be ordered right now */
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+  --font-hand: "Caveat", "Comic Sans MS", cursive;  /* handwritten callouts in figures */
+
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: 2.2rem;
+  --step-4: 3rem;
+
+  --space: 8px;
+  --radius: 14px;
+  --shadow: 0 2px 0 var(--line), 0 10px 24px rgb(146 64 14 / 0.08);
+  --figure-stroke: 3px;      /* outline width for every shape in a figure */
+}
+
+[data-theme="dark"] {
+  --primary: #fb923c;
+  --primary-ink: #1c1917;
+  --crust: #fdba74;
+  --flour: #1c1917;
+  --butter: #a16207;
+  --ink: #f5f5f4;
+  --muted: #a8a29e;
+  --line: #44403c;
+  --sold-out: #57534e;
+  --shadow: 0 2px 0 var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0s;
+  }
+}

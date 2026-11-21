@@ -1,0 +1,42 @@
+{
+  "name": "stockroom-context",
+  "version": "0.1.0",
+  "description": "A tiny, open-source context system. One SQLite file that catalogs your code, design tokens, rules, and examples, and a handful of tools agents use to ask it precise questions.",
+  "type": "module",
+  "bin": {
+    "stockroom": "bin/stockroom.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "!examples/**/.stockroom",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "test": "node --test",
+    "bench": "node bench/bench.js"
+  },
+  "keywords": [
+    "context",
+    "context-system",
+    "context-engineering",
+    "mcp",
+    "agents",
+    "sqlite",
+    "design-system"
+  ],
+  "author": "Kirupa Chinnathambi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kirupa/stockroom.git"
+  },
+  "devDependencies": {
+    "gpt-tokenizer": "^4.1.2"
+  }
+}

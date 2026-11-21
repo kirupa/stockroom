@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu | Crumb &amp; Co.</title>
+  <meta name="description" content="Everything we bake, with prices. Items sell out, so the menu updates through the day.">
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+  <div class="page">
+    <!--#include virtual="/includes/header.html" -->
+    <main id="main">
+      <h1>Today's menu</h1>
+      <p>Order by 10am to recieve it the same afternoon. Anything marked sold out comes back tomorrow.</p>
+      <ul class="menu-grid" id="menu">
+        <li class="card" data-item="croissant">
+          <span class="badge badge--fresh">Fresh today</span>
+          <img class="card__photo" src="/images/croissant.svg" width="320" height="240" alt="A golden croissant on a sheet of parchment.">
+          <h2 class="card__name">Butter croissant</h2>
+          <p class="card__blurb">Three days of folding, 81 layers, one very flaky shirt.</p>
+          <p class="card__price">$4.25</p>
+          <button class="button" type="button" onclick="addToCart('croissant')">Add to order</button>
+        </li>
+        <li class="card" data-item="sourdough">
+          <img class="card__photo" src="/images/sourdough.svg" width="320" height="240" alt="A round sourdough loaf.">
+          <h2 class="card__name">Country sourdough</h2>
+          <p class="card__blurb">Our starter is named Gus. He is eleven years old.</p>
+          <p class="card__price">$9.50</p>
+          <button class="button" type="button" onclick="addToCart('sourdough')">Add to order</button>
+        </li>
+        <li class="card" data-item="scone">
+          <img class="card__photo" src="/images/scone.svg" width="320" height="240" alt="A cranberry orange scone.">
+          <h2 class="card__name">Cranberry orange scone</h2>
+          <p class="card__blurb">Crumbly on purpose.</p>
+          <p class="card__price">$3.75</p>
+          <button class="button" type="button" onclick="addToCart('scone')">Add to order</button>
+        </li>
+      </ul>
+      <p id="cart-status" role="status"></p>
+    </main>
+    <!--#include virtual="/includes/footer.html" -->
+  </div>
+  <script src="/js/cart.js"></script>
+</body>
+</html>

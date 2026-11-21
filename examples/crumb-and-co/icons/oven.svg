@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Oven</title>
+  <desc>The deck oven icon. Use it for anything that happens in the kitchen.</desc>
+  <rect x="6" y="10" width="52" height="46" rx="6" fill="#fffbf5" stroke="#92400e" stroke-width="3"/>
+  <rect x="14" y="26" width="36" height="22" rx="3" fill="#fde68a" stroke="#92400e" stroke-width="3"/>
+  <circle cx="18" cy="18" r="3" fill="#c2410c"/>
+  <circle cx="30" cy="18" r="3" fill="#c2410c"/>
+</svg>

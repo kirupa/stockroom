@@ -1,0 +1,8 @@
+{
+  "updated": "2026-11-21T06:45:00-08:00",
+  "items": [
+    { "id": "croissant", "name": "Butter croissant", "price": 4.25, "left": 18 },
+    { "id": "sourdough", "name": "Country sourdough", "price": 9.5, "left": 6 },
+    { "id": "scone", "name": "Cranberry orange scone", "price": 3.75, "left": 0 }
+  ]
+}

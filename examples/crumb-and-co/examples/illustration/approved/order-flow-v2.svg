@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="900" height="320">
+  <title>How an online order reaches the oven (approved)</title>
+  <desc>A phone, an order ticket, an oven, and a pastry box from left to right, joined by curved arrows. A handwritten callout under the ticket says "prints at 6:02am" and its arrow leaves from the middle of the caption.</desc>
+  <rect width="900" height="320" fill="#fffbf5"/>
+  <image href="../../../icons/phone.svg" x="60" y="100" width="96" height="96"/>
+  <image href="../../../icons/ticket.svg" x="300" y="100" width="96" height="96"/>
+  <image href="../../../icons/oven.svg" x="540" y="100" width="96" height="96"/>
+  <image href="../../../icons/box.svg" x="760" y="100" width="96" height="96"/>
+  <g fill="none" stroke="#c2410c" stroke-width="3" stroke-linecap="round">
+    <path d="M170 140c40-30 80-30 115 0"/>
+    <path d="M410 140c40-30 80-30 115 0"/>
+    <path d="M650 140c35-30 70-30 100 0"/>
+  </g>
+  <text x="348" y="280" text-anchor="middle" font-family="Caveat" font-size="30" fill="#c2410c">prints at 6:02am</text>
+  <path d="M348 255c-10-15-8-30 2-45" fill="none" stroke="#c2410c" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240">
+  <title>Cranberry orange scone</title>
+  <rect width="320" height="240" fill="#fde68a"/>
+  <path d="M80 180l80-120l80 120z" fill="#fbbf24" stroke="#92400e" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="140" cy="150" r="6" fill="#be123c"/>
+  <circle cx="175" cy="135" r="6" fill="#be123c"/>
+</svg>

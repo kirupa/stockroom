@@ -1,0 +1,175 @@
+{
+  "root": "crumb-and-co",
+  "runs": 5,
+  "node": "v24.15.0",
+  "index": {
+    "files": 32,
+    "sections": 39,
+    "symbols": 323,
+    "refs": 36,
+    "examples": 4,
+    "skipped": 1
+  },
+  "rows": [
+    {
+      "job": "Fix the website",
+      "title": "Fix a typo a customer reported (\"recieve\")",
+      "loose": {
+        "calls": 2,
+        "bytes": 2496,
+        "tokens": 710,
+        "ms": 0.8931249999999977,
+        "missing": []
+      },
+      "index": {
+        "calls": 2,
+        "bytes": 570,
+        "tokens": 191,
+        "ms": 0.8937080000000037,
+        "missing": []
+      }
+    },
+    {
+      "job": "Fix the website",
+      "title": "The scone photo is broken on the menu",
+      "loose": {
+        "calls": 2,
+        "bytes": 2440,
+        "tokens": 698,
+        "ms": 0.0963339999999846,
+        "missing": []
+      },
+      "index": {
+        "calls": 2,
+        "bytes": 689,
+        "tokens": 217,
+        "ms": 0.913125000000008,
+        "missing": []
+      }
+    },
+    {
+      "job": "Fix the website",
+      "title": "Sold-out items don't look sold out",
+      "loose": {
+        "calls": 3,
+        "bytes": 7257,
+        "tokens": 2065,
+        "ms": 1.029582999999974,
+        "missing": []
+      },
+      "index": {
+        "calls": 2,
+        "bytes": 623,
+        "tokens": 193,
+        "ms": 1.4395419999999888,
+        "missing": []
+      }
+    },
+    {
+      "job": "Fix the website",
+      "title": "Add a Catering link to the navigation",
+      "loose": {
+        "calls": 2,
+        "bytes": 918,
+        "tokens": 250,
+        "ms": 0.8660409999999956,
+        "missing": []
+      },
+      "index": {
+        "calls": 2,
+        "bytes": 789,
+        "tokens": 281,
+        "ms": 1.0308330000000012,
+        "missing": []
+      }
+    },
+    {
+      "job": "Create a web page",
+      "title": "Build a new Catering page with an order form",
+      "loose": {
+        "calls": 5,
+        "bytes": 11491,
+        "tokens": 3153,
+        "ms": 0.06808399999999892,
+        "missing": []
+      },
+      "index": {
+        "calls": 6,
+        "bytes": 4051,
+        "tokens": 1284,
+        "ms": 1.4022089999999992,
+        "missing": []
+      }
+    },
+    {
+      "job": "Make a slide deck",
+      "title": "Make a short deck for the holiday menu",
+      "loose": {
+        "calls": 7,
+        "bytes": 4243,
+        "tokens": 1192,
+        "ms": 0.09600000000000364,
+        "missing": []
+      },
+      "index": {
+        "calls": 6,
+        "bytes": 2667,
+        "tokens": 815,
+        "ms": 1.43504200000001,
+        "missing": []
+      }
+    },
+    {
+      "job": "Draw a figure",
+      "title": "Draw how an online order reaches the oven",
+      "loose": {
+        "calls": 10,
+        "bytes": 5930,
+        "tokens": 1687,
+        "ms": 0.13745900000000688,
+        "missing": []
+      },
+      "index": {
+        "calls": 7,
+        "bytes": 4839,
+        "tokens": 1399,
+        "ms": 1.4623749999999802,
+        "missing": []
+      }
+    },
+    {
+      "job": "Draw a figure",
+      "title": "Check whether a sourdough figure already exists",
+      "loose": {
+        "calls": 2,
+        "bytes": 1277,
+        "tokens": 384,
+        "ms": 0.8109999999999786,
+        "missing": []
+      },
+      "index": {
+        "calls": 1,
+        "bytes": 271,
+        "tokens": 74,
+        "ms": 0.8229999999999791,
+        "missing": []
+      }
+    }
+  ],
+  "totals": {
+    "loose": {
+      "calls": 33,
+      "bytes": 36052,
+      "tokens": 10139,
+      "ms": 3.99762599999994,
+      "found": 8
+    },
+    "index": {
+      "calls": 28,
+      "bytes": 14499,
+      "tokens": 4454,
+      "ms": 9.39983399999997,
+      "found": 8
+    }
+  }
+}

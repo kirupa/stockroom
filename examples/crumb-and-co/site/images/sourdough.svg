@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240">
+  <title>Country sourdough</title>
+  <rect width="320" height="240" fill="#fde68a"/>
+  <ellipse cx="160" cy="140" rx="110" ry="70" fill="#d97706" stroke="#92400e" stroke-width="3"/>
+  <path d="M90 120c30-30 110-30 140 0" fill="none" stroke="#fffbf5" stroke-width="6" stroke-linecap="round"/>
+</svg>

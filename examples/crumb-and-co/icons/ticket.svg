@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Order ticket</title>
+  <desc>The paper ticket that prints in the kitchen. Use it for an order that a baker has to act on.</desc>
+  <path d="M14 6h36v52l-6-4l-6 4l-6-4l-6 4l-6-4l-6 4z" fill="#fffbf5" stroke="#92400e" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M22 20h20M22 30h20M22 40h12" stroke="#6b7280" stroke-width="3" stroke-linecap="round"/>
+</svg>

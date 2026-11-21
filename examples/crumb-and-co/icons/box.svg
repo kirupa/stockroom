@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Pastry box</title>
+  <desc>A tied pastry box. Use it for finished orders and pickup.</desc>
+  <path d="M8 24h48v32H8z" fill="#fffbf5" stroke="#92400e" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M8 24l8-12h32l8 12" fill="#fde68a" stroke="#92400e" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M32 12v44" stroke="#c2410c" stroke-width="3"/>
+</svg>
