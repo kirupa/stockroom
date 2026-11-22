@@ -455,8 +455,9 @@ export class Counter {
         AND s.name NOT IN (SELECT name FROM symbols WHERE kind = ? AND role = 'def')
       GROUP BY s.name ORDER BY s.name`, kind, kind);
     return {
+      // Examples are a record of past work, so their broken links don't count.
       missing: q(`SELECT f.path, r.line, r.kind, r.raw, r.target FROM refs r JOIN files f ON f.id = r.from_id
-        WHERE r.status = 'missing' ORDER BY f.path, r.line`),
+        WHERE r.status = 'missing' AND f.kind != 'example' ORDER BY f.path, r.line`),
       classes: undefinedNames('class'),
       ids: undefinedNames('id'),
       tokens: undefinedNames('token'),

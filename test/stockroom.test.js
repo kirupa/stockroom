@@ -204,8 +204,9 @@ test('report --strict fails on problems and passes when they are fixed', async (
   fix('site/css/site.css', '  src: url("../fonts/fraunces.woff2") format("woff2");\n', '');
   fix('site/js/cart.js', "'sold-out'", "'is-sold-out'");
   fix('figures/how-sourdough-rises.svg', '#3b82f6', '#c2410c');
+  fix('examples/illustration/approved/order-flow-v2.svg', '../../../icons/phone.svg', '../../../icons/gone.svg');
   build(root);
-  assert.equal(await run(), 0);
+  assert.equal(await run(), 0, 'a broken link inside an example is history, not a failure');
 });
 
 test('serve --watch builds a missing index and keeps it current', async () => {

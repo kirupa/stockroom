@@ -64,8 +64,11 @@ Options:
 function parse(argv) {
   const opts = { root: process.cwd(), db: null, json: false, watch: false, strict: false };
   const rest = [];
+  let literal = false;
   for (const arg of argv) {
-    if (arg === '--json') opts.json = true;
+    if (literal) rest.push(arg);
+    else if (arg === '--') literal = true;
+    else if (arg === '--json') opts.json = true;
     else if (arg === '--watch') opts.watch = true;
     else if (arg === '--strict') opts.strict = true;
     else if (arg.startsWith('--root=')) opts.root = arg.slice(7);
