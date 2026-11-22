@@ -187,3 +187,43 @@ test('the MCP server survives malformed messages and negotiates its version', as
   assert.equal(replies.find((r) => r.id === 2).result.protocolVersion, '2025-06-18');
   assert.deepEqual(replies.find((r) => r.id === 3).result, {});
 });
+
+test('report --strict fails on problems and passes when they are fixed', async () => {
+  const root = copySample();
+  build(root);
+  const run = () => new Promise((resolve) => {
+    const child = spawn(process.execPath, [BIN, 'report', '--strict', `--root=${root}`]);
+    child.on('close', resolve);
+  });
+  assert.equal(await run(), 1);
+  const fix = (file, from, to) => {
+    const p = path.join(root, file);
+    fs.writeFileSync(p, fs.readFileSync(p, 'utf8').replaceAll(from, to));
+  };
+  fix('site/menu.html', '/images/scone.svg', '/images/cranberry-scone.svg');
+  fix('site/css/site.css', '  src: url("../fonts/fraunces.woff2") format("woff2");\n', '');
+  fix('site/js/cart.js', "'sold-out'", "'is-sold-out'");
+  fix('figures/how-sourdough-rises.svg', '#3b82f6', '#c2410c');
+  build(root);
+  assert.equal(await run(), 0);
+});
+
+test('serve --watch builds a missing index and keeps it current', async () => {
+  const root = copySample();
+  const child = spawn(process.execPath, [BIN, 'serve', '--watch', `--root=${root}`]);
+  let out = '';
+  child.stdout.on('data', (chunk) => { out += chunk; });
+  const ask = (id) => child.stdin.write(`${JSON.stringify({ jsonrpc: '2.0', id, method: 'tools/call', params: { name: 'find_symbol', arguments: { name: '.is-new' } } })}\n`);
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  await wait(300);
+  ask(1);
+  await wait(300);
+  fs.appendFileSync(path.join(root, 'site/css/site.css'), '\n.is-new { color: var(--ink); }\n');
+  ask(2);
+  await wait(500);
+  child.stdin.end();
+  await new Promise((r) => child.on('close', r));
+  const replies = Object.fromEntries(out.trim().split('\n').map((l) => JSON.parse(l)).map((m) => [m.id, m.result.content[0].text]));
+  assert.match(replies[1], /no definitions/);
+  assert.match(replies[2], /\.is-new \(class\): 1 definition/);
+});

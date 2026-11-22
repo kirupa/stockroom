@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-export const TOOL_VERSION = '0.1.0';
+export const TOOL_VERSION = '0.2.0';
 
 export const BINARY_EXTENSIONS = new Set([
   '.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.ico', '.bmp', '.tif', '.tiff',
@@ -26,7 +26,7 @@ export const LANGUAGES = {
 export const DEFAULT_CONFIG = {
   name: null,
   shelves: [{ path: '.', kind: 'auto' }],
-  ignore: ['.git', 'node_modules', '.stockroom', '.DS_Store'],
+  ignore: ['.git', 'node_modules', '.stockroom', '.DS_Store', '.gitkeep'],
   maxFileBytes: 256 * 1024,
   secretPatterns: [
     '-----BEGIN [A-Z ]*PRIVATE KEY-----',

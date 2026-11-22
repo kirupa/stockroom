@@ -6,6 +6,7 @@ import path from 'node:path';
 import { build } from '../src/build.js';
 import { Counter, TOOLS, StockroomError } from '../src/counter.js';
 import { serve } from '../src/mcp.js';
+import { watchAndBuild } from '../src/watch.js';
 import { sha256, TOOL_VERSION } from '../src/walk.js';
 
 const ALIASES = {
@@ -36,11 +37,12 @@ Building and keeping it current:
   stockroom build                 Catalog every shelf into .stockroom/context.db
   stockroom watch                 Rebuild whenever something on a shelf changes
   stockroom status                Show what's indexed and whether it's current
-  stockroom report                Broken references, undefined names, off-palette colors, blind spots
+  stockroom report [--strict]     Broken references, undefined names, off-palette colors, blind spots
+                                  (--strict exits with 1 when it finds a problem, for CI)
   stockroom verify <path> <sha>   Check that a file still matches the sha256 an edit was based on
 
 Plugging in an agent:
-  stockroom serve                 Run the MCP server over stdio
+  stockroom serve [--watch]       Run the MCP server over stdio (--watch also builds and rebuilds)
 
 Asking questions yourself (the same tools the agents get):
   stockroom search <text>               search_source
@@ -60,10 +62,12 @@ Options:
 `;
 
 function parse(argv) {
-  const opts = { root: process.cwd(), db: null, json: false };
+  const opts = { root: process.cwd(), db: null, json: false, watch: false, strict: false };
   const rest = [];
   for (const arg of argv) {
     if (arg === '--json') opts.json = true;
+    else if (arg === '--watch') opts.watch = true;
+    else if (arg === '--strict') opts.strict = true;
     else if (arg.startsWith('--root=')) opts.root = arg.slice(7);
     else if (arg.startsWith('--db=')) opts.db = arg.slice(5);
     else if (arg === '--help' || arg === '-h') rest.unshift('help');
@@ -119,28 +123,32 @@ async function main() {
   }
 
   if (command === 'watch') {
-    printBuild(build(opts.root, { dbPath: opts.db }));
-    let timer = null;
-    const dbPath = opts.db ?? path.join(opts.root, '.stockroom', 'context.db');
-    fs.watch(opts.root, { recursive: true }, (_event, file) => {
-      if (!file) return;
-      const abs = path.join(opts.root, file);
-      if (abs.startsWith(dbPath) || file.split(path.sep).includes('.git')) return;
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        try {
-          printBuild(build(opts.root, { dbPath: opts.db }));
-        } catch (err) {
-          console.error(`Rebuild failed: ${err.message}`);
-        }
-      }, 300);
+    watchAndBuild(opts.root, {
+      dbPath: opts.db,
+      onBuild: printBuild,
+      onError: (err) => console.error(`Rebuild failed: ${err.message}`),
     });
     console.log(`Watching ${opts.root}. Press Ctrl+C to stop.`);
     return;
   }
 
   if (command === 'serve') {
-    await serve({ root: opts.root, dbPath: opts.db, maxCalls: Number(process.env.STOCKROOM_MAX_CALLS) || 40 });
+    let watcher = null;
+    if (opts.watch) {
+      // stdout belongs to the MCP protocol, so build messages go to stderr.
+      watcher = watchAndBuild(opts.root, {
+        dbPath: opts.db,
+        onBuild: (r) => console.error(`stockroom: indexed ${r.counts.files} files in ${r.buildMs.toFixed(0)} ms`),
+        onError: (err) => console.error(`stockroom: rebuild failed: ${err.message}`),
+      });
+    }
+    await serve({
+      root: opts.root,
+      dbPath: opts.db,
+      maxCalls: Number(process.env.STOCKROOM_MAX_CALLS) || 40,
+      rebuild: opts.watch ? () => build(opts.root, { dbPath: opts.db }) : null,
+    });
+    watcher?.close();
     return;
   }
 
@@ -174,6 +182,8 @@ async function main() {
 
   if (command === 'report') {
     const r = counter.report();
+    const problems = r.missing.length + r.classes.length + r.ids.length + r.tokens.length + r.offPalette.length;
+    if (opts.strict && problems) process.exitCode = 1;
     if (opts.json) return console.log(JSON.stringify(r, null, 2));
     const section = (title, rows, fmt) => {
       console.log(`${title} (${rows.length})`);
@@ -186,6 +196,7 @@ async function main() {
     section('Tokens used but never defined', r.tokens, (m) => `${m.name}  ${m.uses} use(s), first at ${m.first}`);
     section('Colors in figures that are not in the palette', r.offPalette, (m) => `${m.name}  ${m.path}:${m.line}`);
     section('Not indexed on purpose', r.skipped, (m) => `${m.path}  ${m.reason}`);
+    if (opts.strict) console.log(problems ? `${problems} problem(s) found.` : 'No problems found.');
     return;
   }
 

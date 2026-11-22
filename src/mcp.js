@@ -16,11 +16,11 @@ Ask before you read. Small, precise questions beat reading whole files.
 
 const SUPPORTED_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 
-export function serve({ root, dbPath, maxCalls, input = process.stdin, output = process.stdout }) {
+export function serve({ root, dbPath, maxCalls, rebuild = null, input = process.stdin, output = process.stdout }) {
   let counter = null;
   let startupError = null;
   try {
-    counter = new Counter({ root, dbPath, maxCalls });
+    counter = new Counter({ root, dbPath, maxCalls, rebuild });
   } catch (err) {
     startupError = err.message;
   }
@@ -72,7 +72,7 @@ export function serve({ root, dbPath, maxCalls, input = process.stdin, output = 
       case 'tools/call': {
         if (!counter) {
           try {
-            counter = new Counter({ root, dbPath, maxCalls });
+            counter = new Counter({ root, dbPath, maxCalls, rebuild });
             startupError = null;
           } catch (err) {
             startupError = err.message;

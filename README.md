@@ -9,6 +9,15 @@ It's the companion to the kirupa.com article [Building Your Own Context System](
 - **Works with any agent.** `stockroom serve` is a Model Context Protocol (MCP) server.
 - **Honest about what it doesn't know.** A stale index refuses to answer, and files it skipped on purpose say why.
 
+## Start a project with it
+
+The quickest way to use stockroom on your own work is the **[stockroom-starter](https://github.com/kirupa/stockroom-starter)** template. It comes with empty shelves, starter rules for web pages, slide decks, and figures, an agent for each kind of work (for GitHub Copilot and Claude Code), MCP configs, Git hooks, and a CI check. Click **Use this template** on GitHub, or:
+
+```bash
+gh repo create my-context --template kirupa/stockroom-starter --private --clone
+cd my-context && npm install && npm run setup
+```
+
 ## Try it in a minute
 
 ```bash
@@ -72,9 +81,9 @@ examples/illustration/rejected/order-flow-v1.md   <- verdict, note, and the stor
 | `stockroom build` | Catalogs every shelf into `.stockroom/context.db`, then swaps the new file in all at once. |
 | `stockroom watch` | Rebuilds whenever a file on a shelf changes. |
 | `stockroom status` | Shows what's in the index and which files changed since the last build. |
-| `stockroom report` | Lists broken references, classes, ids, and tokens that are used but never defined, figure colors that aren't in the palette, and files skipped on purpose. |
+| `stockroom report` | Lists broken references, classes, ids, and tokens that are used but never defined, figure colors that aren't in the palette, and files skipped on purpose. Add `--strict` to exit with an error when it finds a problem, which is handy in CI. |
 | `stockroom verify <path> <sha256>` | Checks that a file still matches the hash an edit was based on. |
-| `stockroom serve` | Runs the MCP server over stdio. |
+| `stockroom serve` | Runs the MCP server over stdio. Add `--watch` and the server builds the index itself and keeps it current, so you don't need a separate `watch`. |
 
 Every tool is also a command, so you can ask the same questions your agents ask: `search`, `symbol`, `read`, `ls`, `uses`, `used-by`, `rules`, and `examples`. Run `stockroom help` for the details. Add `--json` for structured output, and `--root=<dir>` to point at a different Context Environment.
 
@@ -109,7 +118,7 @@ npm install -g github:kirupa/stockroom
     "stockroom": {
       "type": "local",
       "command": "stockroom",
-      "args": ["serve", "--root=/path/to/your/context"],
+      "args": ["serve", "--watch", "--root=/path/to/your/context"],
       "tools": ["*"]
     }
   }
@@ -124,7 +133,7 @@ npm install -g github:kirupa/stockroom
     "stockroom": {
       "type": "stdio",
       "command": "stockroom",
-      "args": ["serve", "--root=${workspaceFolder}"]
+      "args": ["serve", "--watch", "--root=${workspaceFolder}"]
     }
   }
 }
@@ -133,7 +142,7 @@ npm install -g github:kirupa/stockroom
 **Claude Code:**
 
 ```bash
-claude mcp add stockroom -- stockroom serve --root=/path/to/your/context
+claude mcp add stockroom -- stockroom serve --watch --root=/path/to/your/context
 ```
 
 ## Keep it current
@@ -144,7 +153,7 @@ An out-of-date index is worse than none, because agents trust it. stockroom guar
 - A rebuild writes a new file next to the old one and renames it into place, so a reader never sees a half-built index. A running MCP server notices the new file and switches to it.
 - `read_source` returns a sha256 for the file it read. Keep it with any edit you propose, and run `stockroom verify` before applying the edit.
 
-Tie `stockroom build` to the one path every change already takes, like a Git hook, a CI step, or `stockroom watch` on the machine your agents run on.
+Tie `stockroom build` to the one path every change already takes, like a Git hook, a CI step, or `stockroom watch` on the machine your agents run on. With `stockroom serve --watch`, the server is its own clerk: it rebuilds when a file changes, and if a question arrives before that rebuild finishes, it rebuilds on the spot instead of refusing.
 
 ## Benchmark
 

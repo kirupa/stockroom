@@ -107,14 +107,15 @@ export const TOOLS = [
 export class StockroomError extends Error {}
 
 export class Counter {
-  constructor({ root = '.', dbPath, maxCalls = 40, maxResultChars = 16000, checkFreshness = true, freshnessIntervalMs = 1000 } = {}) {
+  constructor({ root = '.', dbPath, maxCalls = 40, maxResultChars = 16000, checkFreshness = true, freshnessIntervalMs = 1000, rebuild = null } = {}) {
+    this.rebuild = rebuild;
     this.root = path.resolve(root);
     this.dbPath = path.resolve(dbPath ?? defaultDbPath(this.root));
     this.walkOptions = { exclude: this.dbPath };
     this.maxCalls = maxCalls;
     this.maxResultChars = maxResultChars;
     this.checkFreshness = checkFreshness;
-    this.freshnessIntervalMs = freshnessIntervalMs;
+    this.freshnessIntervalMs = rebuild ? 0 : freshnessIntervalMs;
     this.calls = 0;
     this.freshUntil = 0;
     this.trustedStat = null;
@@ -188,7 +189,15 @@ export class Counter {
     if (now < this.freshUntil) return;
     const stat = statFingerprint(this.root, loadConfig(this.root), this.walkOptions).fingerprint;
     if (stat !== this.trustedStat) {
-      const changed = this.changes();
+      let changed = this.changes();
+      if (changed.length && this.rebuild) {
+        // This process is its own clerk, so rebuild now instead of refusing.
+        this.disconnect();
+        this.rebuild();
+        this.open();
+        this.connect();
+        changed = this.changes();
+      }
       if (changed.length) {
         const list = changed.slice(0, 5).map((c) => `${c.path} (${c.change})`).join(', ');
         throw new StockroomError(
